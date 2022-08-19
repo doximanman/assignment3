@@ -3,14 +3,17 @@
 //
 
 #include "TCPClient.hpp"
+#include "fileHandler.hpp"
 #include <string>
 #include <utility>
+#include <sstream>
 #include "CSVManagement.hpp"
 #include "Point.hpp"
 
 using namespace std;
 using namespace CSV;
 using namespace Networking;
+using namespace files;
 
 TCPClient::TCPClient(std::string unclassifiedDataPath, std::string classifiedDataPath, int port, const char *ip_adress)
         :
@@ -30,16 +33,16 @@ TCPClient::TCPClient(std::string unclassifiedDataPath, std::string classifiedDat
 }
 
 void TCPClient::connectToServer() {
-    char data_addr[4096]={0};
-    int data_len=sizeof(data_addr);
-    std::strcpy(data_addr, _unclassifiedDataPath.c_str());
-    int sent_bytes = (int)send(_sock, data_addr, data_len, 0);
+    char data[4096]={0};
+    int data_len=sizeof(data);
+    std::strcpy(data, fileHandler::getString(_unclassifiedDataPath).c_str());
+    int sent_bytes = (int)send(_sock, data, data_len, 0);
 
     if (sent_bytes < 0) {
-        cout << "Error sending the data to the serve" << endl;
+        cout << "Error sending the data to the server" << endl;
     }
 
-    char buffer[4096];
+    char buffer[4096]={0};
     int expected_data_len = sizeof(buffer);
     int read_bytes = (int)recv(_sock, buffer, expected_data_len, 0);
     if (read_bytes == 0) {
@@ -50,26 +53,17 @@ void TCPClient::connectToServer() {
         perror("Error reading client message");
     } else {
         // convert buffer to type string
-        string classifiedDataString(buffer);
-
-        // add space at the end of the classifiedDataString in order to take care of all the characters in it
-        classifiedDataString.push_back(' ');
-
+        string classificationStrings(buffer);
+        stringstream str(classificationStrings);
+        string currentClassification;
         // classified string vector
-        vector<string> classifiedData;
-
-        // saves each current classification (split by space character ' ') into the vector
-        string current{};
-        for (char &ch: classifiedDataString) {
-            if (ch != ' ') {
-                current.push_back(ch);
-            } else {
-                classifiedData.push_back(current);
-                current = "";
-            }
+        vector<string> classifications;
+        // saves each current classification into the vector
+        while(getline(str,currentClassification)){
+            classifications.push_back(currentClassification);
         }
         // save the classified data in the given classifiedData output path
-        CSVManagement::createCSVOutputFile(classifiedData, _classifiedDataPath);
+        fileHandler::linesToFile(classifications, _classifiedDataPath);
     }
     close(_sock);
 }

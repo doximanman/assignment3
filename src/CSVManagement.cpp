@@ -51,10 +51,6 @@ map<string, vector<Point>> CSVManagement::getClassifiedData(const vector<string>
         Point currentPoint(coords);
         // type of the current point
         string type = point[len - 1];
-        // removes possible '\r' chars.
-        if(type[type.length()-1]=='\r'){
-            type.pop_back();
-        }
         // creates a new type if the type doesn't exist yet.
         if (result.count(type) == 0) {
             result[type] = vector<Point>{};
@@ -82,4 +78,12 @@ vector<Point> CSVManagement::getUnclassifiedData(const vector<string> &lines) {
         result.emplace_back(Point{coords});
     }
     return result;
+}
+
+void CSVManagement::printClassifications(const std::vector<Geometry::Point> &points,
+                                         const std::vector<std::string> &classifications) {
+    for(int i=0;i<points.size();i++){
+        cout << points[i];
+        cout << classifications[i] << endl;
+    }
 }

@@ -36,9 +36,6 @@ vector<string> fileHandler::getLines(const std::string& filePath) {
         perror("Could not open the file");
     }
     while(getline(file,line)){
-        //if(line[line.length()-1]=='\r'){
-        //    line.pop_back();
-        //}
         final.push_back(line);
     }
     return final;

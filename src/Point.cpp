@@ -15,8 +15,7 @@ double Point::at(int position) const{
 }
 
 ostream& operator<<(ostream &os, const Geometry::Point &a){
-    for(int i=0;i<a.dimension-1;i++){
+    for(int i=0;i<a.dimension;i++){
         os<<a.at(i)<<"\t";
     }
-    return os<<a.at(a.dimension-1);
 }

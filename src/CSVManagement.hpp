@@ -31,6 +31,7 @@ namespace CSV {
          * @return
          */
         static std::vector<Geometry::Point> getUnclassifiedData(const std::vector<std::string>& lines);
+        static void printClassifications(const std::vector<Geometry::Point>& points,const std::vector<std::string>& classifications);
 
     };
 }
