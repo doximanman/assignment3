@@ -13,3 +13,6 @@ _deps
 /a.exe
 /a.out
 /קובץ טקסט להגשה.pdf
+/outputFiles/chebyshevOutput.csv
+/outputFiles/euclideanOutput.csv
+/outputFiles/manhattanOutput.csv

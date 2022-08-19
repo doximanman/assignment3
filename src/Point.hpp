@@ -7,7 +7,6 @@
 
 #include <ostream>
 #include "vector"
-using namespace std;
 namespace Geometry {
     /**
      * General, any dimensional spacial point - holds a set of coordinates and can provide
@@ -19,7 +18,7 @@ namespace Geometry {
          * vector of doubles instead of *double,
          * easier to work with and manage.
          */
-        const vector<double> _coordinates;
+        const std::vector<double> _coordinates;
     public:
         /**
          * the dimension of the point (number of coordinates).
@@ -29,7 +28,7 @@ namespace Geometry {
          * constructor
          * @param coordinates given coordinates
          */
-        Point(const vector<double>& coordinates);
+        Point(const std::vector<double>& coordinates);
         /**
          * copy constructor
          * @param other point to copy from.
@@ -45,5 +44,5 @@ namespace Geometry {
 /**
  * @return prints the point in the form (x1,x2,...,xn)
  */
-ostream& operator<<(ostream &os, const Geometry::Point &a);
+std::ostream& operator<<(std::ostream &os, const Geometry::Point &a);
 #endif //ASS1_POINT_HPP

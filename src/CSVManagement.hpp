@@ -6,80 +6,32 @@
 #define ASSIGNMENT1_CSVMANAGEMENT_HPP
 
 #include "Distance.hpp"
+#include <vector>
+#include <map>
 
 namespace CSV {
     class CSVManagement {
     private:
-
         /**
-         * classifiedData vector
+         * @param points the lines of the csv file.
+         * @return a vector with the data given as a vector of the lines of a CSV file.
          */
-        vector<vector<Geometry::Point>> _classifiedData;
-
-        /**
-         * unclassifiedData vector
-         */
-        vector<Geometry::Point> _unclassifiedData;
-
-        /**
-         * path to classified.csv
-         */
-        string _classifiedDataPath;
-
-        /**
-         * path to Unclassified.csv
-         */
-        string _unclassifiedDataPath;
-
-        /**
-         * path to output csv files
-         */
-        string _fileOutputPath;
-
-        /**
-         * Returns a vector with the data stored in the csv file at the given path.
-         * @param filePath the path to the input file.
-         * @return a vector with the data stored in the csv file at the given path.
-         */
-        vector<vector<string>> createDataVector(const string &filePath);
-
-        /**
-         * Creates the classified data out of the given classified.csv file.
-         */
-        void createClassifiedData();
-
-        /**
-         * Creates the unclassified data out of the given Unclassified.csv file.
-         */
-        void createUnclassifiedData();
+        static std::vector<std::vector<std::string>> createDataVector(const std::vector<std::string>& lines);
 
     public:
 
         /**
-         * Getter of the classified data.
-         * @return classifiedData.
+         * @param lines lines of a csv file.
+         * @return a map between the type and the set of points that belong to the type.
          */
-        vector<vector<Geometry::Point>> getClassifiedData();
+        static std::map<std::string,std::vector<Geometry::Point>> getClassifiedData(const std::vector<std::string>& lines);
 
         /**
-         * Getter of unclassified data.
-         * @return unclassifiedData.
+         * get unclassified vector of points from lines of a csv file.
+         * @return
          */
-        vector<Geometry::Point> getUnclassifiedData();
+        static std::vector<Geometry::Point> getUnclassifiedData(const std::vector<std::string>& lines);
 
-        /**
-         * Writes the strings of the given string vector into a file named with the given fileOutputPath.
-         * @param classifiedData strings vector.
-         * @param fileOutputPath the path of the output file.
-         */
-        static void createCSVOutputFile(const vector<string> &classifiedData, const string &fileOutputPath);
-
-        /**
-         * Constructor.
-         * @param classifiedDataPath path to classified.csv.
-         * @param unclassifiedDataPath path to Unclassified.csv
-         */
-        CSVManagement(const string &classifiedDataPath, const string &unclassifiedDataPath);
     };
 }
 #endif //ASSIGNMENT1_CSVMANAGEMENT_HPP

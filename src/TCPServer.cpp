@@ -5,11 +5,13 @@
 #include "TCPServer.hpp"
 #include <string>
 #include <utility>
+#include "fileHandler.hpp"
 #include "KNearestNeighbors.hpp"
 #include "CSVManagement.hpp"
 #include "Point.hpp"
 #include "EuclideanDistance.hpp"
 
+using namespace files;
 using namespace std;
 using namespace CSV;
 using namespace Networking;
@@ -60,8 +62,7 @@ void TCPServer::handleClient() {
         // client sends the server the input path.
         string inputPath(buffer);
         // classifies the data using euclidean distance.
-        CSVManagement csvm(_dataPath, inputPath);
-        vector<vector<Point>> data = csvm.getClassifiedData();
+        map<string,vector<Point>> data = CSVManagement::getClassifiedData(fileHandler::getLines(_dataPath));
         EuclideanDistance euclideanDistance{};
         vector<string> classifiedData = KNearestNeighbors::classifyData(K, euclideanDistance, csvm.getClassifiedData(),
                                                                         csvm.getUnclassifiedData());

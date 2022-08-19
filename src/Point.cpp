@@ -4,6 +4,7 @@
 
 #include "Point.hpp"
 
+using namespace std;
 using namespace Geometry;
 Point::Point(const vector<double>& coordinates):dimension((int)coordinates.size()),_coordinates(coordinates) {
 }
@@ -14,9 +15,8 @@ double Point::at(int position) const{
 }
 
 ostream& operator<<(ostream &os, const Geometry::Point &a){
-    os<<"(";
     for(int i=0;i<a.dimension-1;i++){
-        os<<a.at(i)<<",";
+        os<<a.at(i)<<"\t";
     }
-    return os<<a.at(a.dimension-1)<<") ";
+    return os<<a.at(a.dimension-1);
 }
