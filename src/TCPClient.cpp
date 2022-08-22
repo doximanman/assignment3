@@ -7,11 +7,8 @@
 #include <string>
 #include <utility>
 #include <sstream>
-#include "CSVManagement.hpp"
-#include "Point.hpp"
 
 using namespace std;
-using namespace CSV;
 using namespace Networking;
 using namespace files;
 

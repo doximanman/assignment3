@@ -18,17 +18,17 @@ namespace Geometry {
          * vector of doubles instead of *double,
          * easier to work with and manage.
          */
-        const std::vector<double> _coordinates;
+        std::vector<double> _coordinates;
     public:
         /**
-         * the dimension of the point (number of coordinates).
+         * @return the dimension of the point (number of coordinates).
          */
-        const int dimension;
+        int dimension() const;
         /**
          * constructor
          * @param coordinates given coordinates
          */
-        Point(const std::vector<double>& coordinates);
+        explicit Point(const std::vector<double>& coordinates);
         /**
          * copy constructor
          * @param other point to copy from.
@@ -39,6 +39,7 @@ namespace Geometry {
          * @return the position-th coordinate of the point.
          */
         double at(int position) const;
+        Point& operator=(const Point& other);
     };
 }
 /**

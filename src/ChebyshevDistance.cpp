@@ -9,7 +9,7 @@ using namespace Geometry;
 using namespace std;
 
 double ChebyshevDistance::distance(Point p1, Point p2) {
-    int dimension=p1.dimension;
+    int dimension=p1.dimension();
     double maxDifference=-1;
     for(int i=0;i<dimension;i++){
         double difference=fabs(p1.at(i)-p2.at(i));

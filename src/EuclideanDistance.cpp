@@ -9,7 +9,7 @@
 using namespace Geometry;
 
 double EuclideanDistance::distance(Point p1, Point p2) {
-    int dimension = p1.dimension;
+    int dimension = p1.dimension();
     double sumOfSquares = 0;
     for (int i = 0; i < dimension; i++) {
         double difference = p1.at(i) - p2.at(i);

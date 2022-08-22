@@ -28,10 +28,12 @@ int main(int argc, char *argv[]) {
     EuclideanDistance euclideanDistance{};
     ManhattanDistance manhattanDistance{};
     ChebyshevDistance chebyshevDistance{};
-    cout << stoi(argv[1]) << endl;
 
+    KNearestNeighbors knn(data,stoi(argv[1]),euclideanDistance);
     // creating classified output files
-    fileHandler::linesToFile(KNearestNeighbors::classifyData(3,euclideanDistance,data,unclassified),"../outputFiles/euclideanOutput.csv");
-    fileHandler::linesToFile(KNearestNeighbors::classifyData(3,manhattanDistance,data,unclassified),"../outputFiles/manhattanOutput.csv");
-    fileHandler::linesToFile(KNearestNeighbors::classifyData(3,chebyshevDistance,data,unclassified),"../outputFiles/chebyshevOutput.csv");
+    fileHandler::linesToFile(knn.classifyData(unclassified),"../outputFiles/euclideanOutput.csv");
+    knn.setDistance(manhattanDistance);
+    fileHandler::linesToFile(knn.classifyData(unclassified),"../outputFiles/manhattanOutput.csv");
+    knn.setDistance(chebyshevDistance);
+    fileHandler::linesToFile(knn.classifyData(unclassified),"../outputFiles/chebyshevOutput.csv");
 }
