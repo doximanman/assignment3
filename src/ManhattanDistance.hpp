@@ -15,6 +15,7 @@ namespace Geometry {
         * @return Manhattan distance - sum of the absolute values of the differences between the points' coordinates.
         */
         double distance(Point p1, Point p2) override;
+        std::string name() override;
     };
 }
 

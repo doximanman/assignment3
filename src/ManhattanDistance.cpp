@@ -15,3 +15,7 @@ double ManhattanDistance::distance(Point p1, Point p2) {
     }
     return sum;
 }
+
+std::string ManhattanDistance::name() {
+    return "MAN";
+}

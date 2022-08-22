@@ -18,3 +18,7 @@ double ChebyshevDistance::distance(Point p1, Point p2) {
     }
     return maxDifference;
 }
+
+std::string ChebyshevDistance::name() {
+    return "CHE";
+}

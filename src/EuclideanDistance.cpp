@@ -17,3 +17,7 @@ double EuclideanDistance::distance(Point p1, Point p2) {
     }
     return sqrt(sumOfSquares);
 }
+
+std::string EuclideanDistance::name() {
+    return "EUC";
+}

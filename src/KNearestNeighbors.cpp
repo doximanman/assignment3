@@ -10,8 +10,7 @@ using namespace std;
 using namespace Geometry;
 
 
-KNearestNeighbors::KNearestNeighbors(const std::map<std::string,
-        std::vector<Geometry::Point>> &data,
+KNearestNeighbors::KNearestNeighbors(const std::map<std::string, std::vector<Geometry::Point>> &data,
                                      int k,
                                      Geometry::Distance &distance) :
         _data(), _distance(distance), numOfPoints(0) {
@@ -27,6 +26,13 @@ KNearestNeighbors::KNearestNeighbors(const std::map<std::string,
     _k = k;
 }
 
+int KNearestNeighbors::getK() const {
+    return _k;
+}
+
+Geometry::Distance &KNearestNeighbors::getDistance() {
+    return _distance;
+}
 void KNearestNeighbors::setK(int k) {
     _k = k;
 }

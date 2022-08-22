@@ -12,6 +12,7 @@ namespace Geometry {
          * @return Chebyshev distance - maximum difference between the coordinates of the points.
          */
             double distance(Point p1, Point p2) override;
+            std::string name() override;
     };
 }
 

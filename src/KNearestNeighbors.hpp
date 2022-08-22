@@ -44,8 +44,9 @@ public:
       * @param k the K to use in the algorithm.
       * @param distance the distance function.
       */
-    KNearestNeighbors(const std::map<std::string,std::vector<Geometry::Point>>& data,
-                      int k, Geometry::Distance& distance);
+    KNearestNeighbors(const std::map<std::string,std::vector<Geometry::Point>>& data, int k, Geometry::Distance& distance);
+    int getK() const;
+    Geometry::Distance& getDistance();
     void setK(int k);
     void setDistance(const Geometry::Distance& distance);
     /**
