@@ -43,6 +43,7 @@ public:
      *                                                        "XYZ" is the name of the distance to use.
      */
     void execute() override;
+    ~KNNInstance() noexcept override;
 };
 
 

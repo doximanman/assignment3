@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13)  # CMake version check
 project(simple_example)               # Create project "simple_example"
-set(CMAKE_CXX_STANDARD 14)            # Enable c++14 standard
+set(CMAKE_CXX_STANDARD 11)            # Enable c++14 standard
 
 # Add main.cpp file of project root directory as source file
 set(SOURCE_FILES src/main.cpp src/Distance/Distance.hpp src/Distance/ChebyshevDistance.cpp src/Distance/ChebyshevDistance.hpp src/Distance/EuclideanDistance.cpp src/Distance/EuclideanDistance.hpp src/Distance/ManhattanDistance.cpp src/Distance/ManhattanDistance.hpp src/Point.cpp src/Point.hpp src/CSVManagement.cpp src/CSVManagement.hpp src/KNearestNeighbors.cpp src/KNearestNeighbors.hpp src/fileHandler.cpp src/fileHandler.hpp src/TCPServer.cpp src/TCPServer.hpp src/TCPClient.cpp src/TCPClient.hpp src/CLI.cpp src/CLI.hpp src/DefaultIO.hpp src/Commands/Command.cpp src/Commands/Command.hpp src/Commands/UploadCSV.cpp src/Commands/UploadCSV.hpp src/Commands/KNNInstance.cpp src/Commands/KNNInstance.hpp src/StandardIO.cpp src/StandardIO.hpp src/Commands/Classifier.cpp src/Commands/Classifier.hpp src/Commands/ConfusionMatrix.cpp src/Commands/ConfusionMatrix.hpp src/Commands/DisplayResults.cpp src/Commands/DisplayResults.hpp src/Commands/DownloadResults.cpp src/Commands/DownloadResults.hpp)

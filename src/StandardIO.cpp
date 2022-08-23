@@ -13,6 +13,6 @@ void StandardIO::write(const std::string &message) {
 
 std::string StandardIO::read() {
     string message;
-    cin >> message;
+    getline(cin,message);
     return message;
 }

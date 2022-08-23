@@ -9,10 +9,10 @@
 
 class ConfusionMatrix : public Command{
 private:
-    Classifier _cl;
+    Classifier* _cl;
     std::vector<std::string> _knownClassifications;
 public:
-    ConfusionMatrix(DefaultIO& dio,Classifier cl);
+    ConfusionMatrix(DefaultIO& dio,Classifier* cl);
     void clear();
     void addPoints(const std::vector<Geometry::Point>& points);
     void addClassifications(const std::vector<std::string>& classifications);

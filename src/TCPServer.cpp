@@ -66,8 +66,7 @@ void TCPServer::handleClient() {
         // classifies the data using euclidean distance.
         map<string,vector<Point>> data = CSVManagement::getClassifiedData(fileHandler::getLines(_dataPath));
         vector<Point> unclassified=CSVManagement::getUnclassifiedData(unclassifiedPoints);
-        EuclideanDistance euclideanDistance{};
-        KNearestNeighbors knn(data,K,euclideanDistance);
+        KNearestNeighbors knn(data,K,new EuclideanDistance{});
         vector<string> classifiedData = knn.classifyData(unclassified);
         //combines the classified data into one string (with ' ' (space) as separation between classifications).
         for (int i = 0; i < classifiedData.size(); i++) {

@@ -14,12 +14,12 @@ using namespace files;
 KNNInstance::KNNInstance(DefaultIO &dio) : Command(dio), _knn(defaultKNN()), _distances() {
     _description = "algorithm settings";
     // known distances
-    EuclideanDistance EUC{};
-    ManhattanDistance MAN{};
-    ChebyshevDistance CHE{};
-    _distances[EUC.name()] = &(EUC);
-    _distances[MAN.name()] = &(MAN);
-    _distances[CHE.name()] = &(CHE);
+    auto *EUC=new EuclideanDistance{};
+    auto *MAN=new ManhattanDistance{};
+    auto *CHE=new ChebyshevDistance{};
+    _distances[EUC->name()] = EUC;
+    _distances[MAN->name()] = MAN;
+    _distances[CHE->name()] = CHE;
 }
 
 int KNNInstance::getK() {
@@ -32,10 +32,8 @@ KNearestNeighbors KNNInstance::defaultKNN() {
     // default data.
     map<string, vector<Point>> data = CSVManagement::getClassifiedData(
             fileHandler::getLines("../inputFiles/classified.csv"));
-    // euclidean distance.
-    EuclideanDistance EUC{};
-    // K=5.
-    return {data, 5, EUC};
+    // K=5, euclidean distance
+    return {data, 5, new EuclideanDistance{}};
 }
 
 std::string KNNInstance::classify(const Geometry::Point& p) {
@@ -45,7 +43,7 @@ std::string KNNInstance::classify(const Geometry::Point& p) {
 void KNNInstance::execute() {
     _dio.write("The current KNN parameters are: K = " + to_string(getK()) + ", distance metric = " + getDistance());
     string currentLine = _dio.read();
-    if (_dio.read() != "\n") {
+    if (!currentLine.empty()) {
         int newK = -1;
         Distance *newDistance = nullptr;
         do {
@@ -87,7 +85,7 @@ void KNNInstance::execute() {
             }
         } while (newK == -1 || newDistance == nullptr);
         _knn.setK(newK);
-        _knn.setDistance(*newDistance);
+        _knn.setDistance(newDistance);
     }
 }
 
@@ -99,4 +97,10 @@ bool KNNInstance::isInteger(const std::string &str) {
         }
     }
     return true;
+}
+
+KNNInstance::~KNNInstance() noexcept {
+    for(auto& dist:_distances){
+        delete dist.second;
+    }
 }

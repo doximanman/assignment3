@@ -5,9 +5,9 @@
 
 class DisplayResults : public Command {
 private:
-    Classifier _cl;
+    Classifier* _cl;
 public:
-    DisplayResults(DefaultIO& dio,Classifier cl);
+    DisplayResults(DefaultIO& dio,Classifier* cl);
     void execute() override;
 };
 

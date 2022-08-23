@@ -3,11 +3,11 @@
 
 #include "Classifier.hpp"
 
-class DownloadResults : Command {
+class DownloadResults : public Command {
 private:
-    Classifier _cl;
+    Classifier* _cl;
 public:
-    DownloadResults(DefaultIO& dio,Classifier cl);
+    DownloadResults(DefaultIO& dio,Classifier* cl);
     void execute() override;
 };
 

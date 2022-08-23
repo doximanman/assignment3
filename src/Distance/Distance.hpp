@@ -19,6 +19,7 @@ namespace Geometry {
          * @return name of the distance.
          */
         virtual std::string name()=0;
+        virtual ~Distance()=default;
     };
 }
 #endif //ASS1_DISTANCE_HPP

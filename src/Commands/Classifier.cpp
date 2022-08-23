@@ -7,7 +7,7 @@
 using namespace std;
 using namespace Geometry;
 
-Classifier::Classifier(DefaultIO &dio, KNNInstance knn) : Command(dio),_knn(std::move(knn)),_points(),_classifications(){
+Classifier::Classifier(DefaultIO &dio, KNNInstance* knn) : Command(dio),_knn(knn),_points(),_classifications(){
     _description="classify data";
     classified=false;
 }
@@ -34,7 +34,7 @@ std::vector<std::string> Classifier::classify() {
     if(!classified){
         _classifications.clear();
         for(Point& p : _points){
-            _classifications.push_back(_knn.classify(p));
+            _classifications.push_back(_knn->classify(p));
         }
         classified=true;
     }

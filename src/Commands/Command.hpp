@@ -11,6 +11,7 @@ public:
     explicit Command(DefaultIO &dio);
     std::string description();
     virtual void execute()=0;
+    virtual ~Command()=default;
 };
 
 

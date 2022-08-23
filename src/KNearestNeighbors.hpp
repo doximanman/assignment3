@@ -8,7 +8,7 @@
 class KNearestNeighbors {
 private:
     int _k;
-    Geometry::Distance &_distance;
+    Geometry::Distance *_distance;
     /**
      * maps every type in the _data table to its name.
      */
@@ -40,11 +40,11 @@ public:
       * @param k the K to use in the algorithm.
       * @param distance the distance function.
       */
-    KNearestNeighbors(const std::map<std::string,std::vector<Geometry::Point>>& data, int k, Geometry::Distance& distance);
+    KNearestNeighbors(const std::map<std::string,std::vector<Geometry::Point>>& data, int k, Geometry::Distance* distance);
     int getK() const;
     Geometry::Distance& getDistance();
     void setK(int k);
-    void setDistance(const Geometry::Distance& distance);
+    void setDistance(Geometry::Distance* distance);
     /**
      * @return a table of all the distances from the point.
      */
@@ -71,6 +71,7 @@ public:
      * @return vector of classification (the i-th position is the classification of the i-th point)
      */
      std::vector<std::string> classifyData(const std::vector<Geometry::Point> &unclassifiedData);
+     ~KNearestNeighbors();
 };
 
 #endif //ASS1_KNEARESTNEIGHBORS_HPP
