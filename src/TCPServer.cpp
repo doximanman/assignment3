@@ -6,7 +6,7 @@
 #include "KNearestNeighbors.hpp"
 #include "CSVManagement.hpp"
 #include "Point.hpp"
-#include "EuclideanDistance.hpp"
+#include "Distance/EuclideanDistance.hpp"
 
 using namespace files;
 using namespace std;

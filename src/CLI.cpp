@@ -4,9 +4,9 @@
 #include "fileHandler.hpp"
 
 using namespace std;
-CLI::CLI() : _commands(){
+CLI::CLI(DefaultIO& dio) : _dio(dio),_commands(){
 }
-CLI::CLI(std::vector<Command *> commands):_commands(std::move(commands)) {
+CLI::CLI(DefaultIO& dio,std::vector<Command*> commands):_dio(dio),_commands(std::move(commands)) {
 }
 
 

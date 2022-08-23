@@ -31,6 +31,10 @@ public:
      * @return name of the KNN distance.
      */
     std::string getDistance();
+    /**
+     * @param p the point to classify.
+     * @return the classification.
+     */
     std::string classify(const Geometry::Point& p);
     /**
      * Asks the user to provide new KNN parameters.

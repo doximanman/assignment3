@@ -1,7 +1,7 @@
 #include "Point.hpp"
-#include "EuclideanDistance.hpp"
-#include "ChebyshevDistance.hpp"
-#include "ManhattanDistance.hpp"
+#include "Distance/EuclideanDistance.hpp"
+#include "Distance/ChebyshevDistance.hpp"
+#include "Distance/ManhattanDistance.hpp"
 #include "KNearestNeighbors.hpp"
 #include "fileHandler.hpp"
 #include <string>

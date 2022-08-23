@@ -1,8 +1,8 @@
 #include <sstream>
 #include "KNNInstance.hpp"
-#include "../ManhattanDistance.hpp"
-#include "../ChebyshevDistance.hpp"
-#include "../EuclideanDistance.hpp"
+#include "../Distance/ManhattanDistance.hpp"
+#include "../Distance/ChebyshevDistance.hpp"
+#include "../Distance/EuclideanDistance.hpp"
 #include "../fileHandler.hpp"
 #include "../CSVManagement.hpp"
 

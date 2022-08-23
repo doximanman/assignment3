@@ -1,7 +1,7 @@
 #ifndef ASSIGNMENT1_CSVMANAGEMENT_HPP
 #define ASSIGNMENT1_CSVMANAGEMENT_HPP
 
-#include "Distance.hpp"
+#include "Distance/Distance.hpp"
 #include <vector>
 #include <map>
 

@@ -7,16 +7,19 @@
 class CLI {
 private:
     std::vector<Command*> _commands;
+    DefaultIO& _dio;
 public:
     /**
      * Initializes a command line interface with default settings and set of commands.
+     * @param dio IO for reading and writing.
      */
-    CLI();
+    explicit CLI(DefaultIO& dio);
     /**
      * Initializes a command line interface with default settings a given set of commands.
      * @param commands set of the commands.
+     * @param dio IO for reading and writing.
      */
-    explicit CLI(std::vector<Command*> commands);
+    CLI(DefaultIO& dio,std::vector<Command*> commands);
     void start();
 };
 

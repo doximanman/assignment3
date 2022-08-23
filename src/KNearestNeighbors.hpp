@@ -1,7 +1,7 @@
 #ifndef ASS1_KNEARESTNEIGHBORS_HPP
 #define ASS1_KNEARESTNEIGHBORS_HPP
 
-#include "Distance.hpp"
+#include "Distance/Distance.hpp"
 #include <array>
 #include <map>
 

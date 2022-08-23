@@ -1,7 +1,7 @@
 #ifndef ASS1_DISTANCE_HPP
 #define ASS1_DISTANCE_HPP
 
-#include "Point.hpp"
+#include "../Point.hpp"
 
 namespace Geometry {
     /**

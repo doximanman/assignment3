@@ -1,39 +1,30 @@
+//
+// Created by kalo3 on 23-Aug-22.
+//
+
 #include "ConfusionMatrix.hpp"
 
 #include <utility>
 
-using namespace std;
-using namespace Geometry;
-
-ConfusionMatrix::ConfusionMatrix(DefaultIO &dio, KNNInstance knn) : Command(dio),
-                                                                    _knn(std::move(knn)),
-                                                                    _knownClassifications(),
-                                                                    _points() {
+ConfusionMatrix::ConfusionMatrix(DefaultIO &dio, Classifier cl) : Command(dio),_cl(std::move(cl)) {
     _description="display algorithm confusion matrix";
 }
 
-void ConfusionMatrix::addClassification(const string& classification) {
-    _knownClassifications.push_back(classification);
-}
-
-void ConfusionMatrix::addClassifications(const vector<string>& classifications) {
-    for(const string& classification:classifications){
-        addClassification(classification);
-    }
-}
-void ConfusionMatrix::addPoint(const Point& p) {
-    _points.push_back(p);
-}
-void ConfusionMatrix::addPoints(const std::vector<Geometry::Point>& points) {
-    for(const Point& p:points){
-        addPoint(p);
-    }
-}
 void ConfusionMatrix::clear() {
-    _points.clear();
+    _cl.clear();
     _knownClassifications.clear();
 }
 
+void ConfusionMatrix::addPoints(const std::vector<Geometry::Point>& points) {
+    _cl.addPoints(points);
+}
+
+void ConfusionMatrix::addClassifications(const std::vector<std::string>& classifications) {
+    for(const std::string& classification : classifications){
+        _knownClassifications.push_back(classification);
+    }
+}
 void ConfusionMatrix::execute() {
     // implementation needed.
+    // code should fail if points haven't been classified yet (using the '3' command).
 }
