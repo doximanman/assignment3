@@ -9,6 +9,7 @@ using namespace Geometry;
 
 Classifier::Classifier(DefaultIO &dio, KNNInstance knn) : Command(dio),_knn(std::move(knn)),_points(),_classifications(){
     _description="classify data";
+    classified=false;
 }
 
 std::vector<Geometry::Point> Classifier::points(){
@@ -19,20 +20,23 @@ std::vector<Geometry::Point> Classifier::points(){
 }
 void Classifier::clear() {
     _points.clear();
+    _classifications.clear();
+    classified=false;
 }
 void Classifier::addPoint(const Point &p) {
     _points.push_back(p);
 }
 
-bool Classifier::wereClassified() {
-    return _classifications.size()==_points.size();
+bool Classifier::wereClassified() const {
+    return classified;
 }
 std::vector<std::string> Classifier::classify() {
-    if(_classifications.size()!=_points.size()){
+    if(!classified){
         _classifications.clear();
         for(Point& p : _points){
             _classifications.push_back(_knn.classify(p));
         }
+        classified=true;
     }
     return _classifications;
 }

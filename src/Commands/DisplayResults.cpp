@@ -17,5 +17,8 @@ void DisplayResults::execute() {
             _dio.write(std::to_string(i+1)+"\t"+classifications[i]);
         }
     }
+    else{
+        _dio.write("The data isn't classified! Please use the 'classify data' command first.");
+    }
     _dio.write("Done.");
 }
