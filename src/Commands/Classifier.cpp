@@ -1,9 +1,11 @@
 #include "Classifier.hpp"
 
+#include <utility>
+
 using namespace std;
 using namespace Geometry;
 
-Classifier::Classifier(DefaultIO &dio, KNNInstance* knn) : Command(dio),_knn(knn),_points(),_classifications(){
+Classifier::Classifier(DefaultIO &dio, KNNInstance& knn) : Command(dio),_knn(knn),_points(),_classifications(){
     _description="classify data";
     classified=false;
 }
@@ -32,7 +34,7 @@ std::vector<std::string> Classifier::classify() {
         // data isn't classified already. classifies it.
         _classifications.clear();
         for(Point& p : _points){
-            _classifications.push_back(_knn->classify(p));
+            _classifications.push_back(_knn.classify(p));
         }
         classified=true;
     }

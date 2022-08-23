@@ -2,16 +2,17 @@
 #define SIMPLE_EXAMPLE_KNNINSTANCE_HPP
 
 #include "Command.hpp"
+#include "../Distance/Distances.hpp"
 #include "../KNearestNeighbors.hpp"
 
 class KNNInstance : public Command{
 private:
-    std::map<std::string,Geometry::Distance*> _distances;
+    Geometry::Distances _distances;
     KNearestNeighbors _knn;
     /**
      * @return default settings with K=5 and euclidean distance.
      */
-    static KNearestNeighbors defaultKNN();
+    KNearestNeighbors defaultKNN();
     /**
      * @param str a string.
      * @return whether str is an integer or not.
@@ -43,7 +44,6 @@ public:
      *                                                        "XYZ" is the name of the distance to use.
      */
     void execute() override;
-    ~KNNInstance() noexcept override;
 };
 
 

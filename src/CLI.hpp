@@ -7,8 +7,7 @@
 
 class CLI {
 private:
-    bool allocated=false;
-    std::vector<Command*> _commands;
+    std::vector<std::unique_ptr<Command>> _commands;
     DefaultIO& _dio;
     static bool isInteger(const std::string& str);
 public:
@@ -22,9 +21,8 @@ public:
      * @param commands set of the commands.
      * @param dio IO for reading and writing.
      */
-    CLI(DefaultIO& dio,std::vector<Command*> commands);
+    CLI(DefaultIO& dio,const std::vector<Command*>& commands);
     void start();
-    ~CLI();
 };
 
 

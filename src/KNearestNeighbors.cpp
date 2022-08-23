@@ -8,7 +8,7 @@ using namespace Geometry;
 
 KNearestNeighbors::KNearestNeighbors(const std::map<std::string, std::vector<Geometry::Point>> &data,
                                      int k,
-                                     Geometry::Distance *distance) :
+                                     Geometry::Distance &distance) :
         _data(), _distance(distance), numOfPoints(0) {
     int typeCount = 0;
     for (auto &keyValPair: data) {
@@ -27,14 +27,14 @@ int KNearestNeighbors::getK() const {
 }
 
 Geometry::Distance& KNearestNeighbors::getDistance() {
-    return *_distance;
+    return _distance;
 }
 void KNearestNeighbors::setK(int k) {
     _k = k;
 }
 
-void KNearestNeighbors::setDistance(Geometry::Distance *distance) {
-    _distance = distance;
+void KNearestNeighbors::setDistance(Geometry::Distance &distance) {
+    _distance=distance;
 }
 
 vector<vector<double>> KNearestNeighbors::distances(const Geometry::Point& modelPoint) {
@@ -45,7 +45,7 @@ vector<vector<double>> KNearestNeighbors::distances(const Geometry::Point& model
         dists.at(i) = vector<double>(_data.at(i).size());
         for (int j = 0; j < _data.at(i).size(); j++) {
             // sets [i][j] of the table to be the distance between the model point and data[i][j].
-            dists.at(i).at(j) = _distance->distance(_data.at(i).at(j), modelPoint);
+            dists.at(i).at(j) = _distance.distance(_data.at(i).at(j), modelPoint);
         }
     }
     return dists;
@@ -142,8 +142,4 @@ void KNearestNeighbors::printNearestNeighbors(const Geometry::Point& modelPoint)
         std::cout << item;
     }
     std::cout << endl;
-}
-
-KNearestNeighbors::~KNearestNeighbors() {
-    delete _distance;
 }

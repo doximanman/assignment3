@@ -1,16 +1,18 @@
 #include "ConfusionMatrix.hpp"
 
-ConfusionMatrix::ConfusionMatrix(DefaultIO &dio, Classifier* cl) : Command(dio),_cl(cl) {
+#include <utility>
+
+ConfusionMatrix::ConfusionMatrix(DefaultIO &dio, Classifier& cl) : Command(dio),_cl(cl) {
     _description="display algorithm confusion matrix";
 }
 
 void ConfusionMatrix::clear() {
-    _cl->clear();
+    _cl.clear();
     _knownClassifications.clear();
 }
 
 void ConfusionMatrix::addPoints(const std::vector<Geometry::Point>& points) {
-    _cl->addPoints(points);
+    _cl.addPoints(points);
 }
 
 void ConfusionMatrix::addClassifications(const std::vector<std::string>& classifications) {

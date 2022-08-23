@@ -1,8 +1,5 @@
 #include <sstream>
 #include "KNNInstance.hpp"
-#include "../Distance/ManhattanDistance.hpp"
-#include "../Distance/ChebyshevDistance.hpp"
-#include "../Distance/EuclideanDistance.hpp"
 #include "../fileHandler.hpp"
 #include "../CSVManagement.hpp"
 
@@ -11,15 +8,8 @@ using namespace Geometry;
 using namespace CSV;
 using namespace files;
 
-KNNInstance::KNNInstance(DefaultIO &dio) : Command(dio), _knn(defaultKNN()), _distances() {
+KNNInstance::KNNInstance(DefaultIO &dio) : Command(dio),_distances(), _knn(defaultKNN()) {
     _description = "algorithm settings";
-    // known distances
-    auto *EUC=new EuclideanDistance{};
-    auto *MAN=new ManhattanDistance{};
-    auto *CHE=new ChebyshevDistance{};
-    _distances[EUC->name()] = EUC;
-    _distances[MAN->name()] = MAN;
-    _distances[CHE->name()] = CHE;
 }
 
 int KNNInstance::getK() {
@@ -33,7 +23,7 @@ KNearestNeighbors KNNInstance::defaultKNN() {
     map<string, vector<Point>> data = CSVManagement::getClassifiedData(
             fileHandler::getLines("../inputFiles/classified.csv"));
     // K=5, euclidean distance
-    return {data, 5, new EuclideanDistance{}};
+    return {data, 5,_distances.getDistance("EUC")};
 }
 
 std::string KNNInstance::classify(const Geometry::Point& p) {
@@ -45,7 +35,7 @@ void KNNInstance::execute() {
     string currentLine = _dio.read();
     if (!currentLine.empty()) {
         int newK = -1;
-        Distance *newDistance = nullptr;
+        string newDistance{};
         do {
             stringstream str(currentLine);
             vector<string> words{};
@@ -75,17 +65,17 @@ void KNNInstance::execute() {
                 }
                 // checking the second argument.
                 // checks if the distance entered is a known distance.
-                if (_distances.count(words[1]) == 0) {
+                if (!Geometry::Distances::isDistance(words[1])) {
                     _dio.write("Invalid distance!");
                     currentLine = _dio.read();
                 } else {
                     // the distance is known.
-                    newDistance = _distances[words[1]];
+                    newDistance = words[1];
                 }
             }
-        } while (newK == -1 || newDistance == nullptr);
+        } while (newK == -1 || newDistance.empty());
         _knn.setK(newK);
-        _knn.setDistance(newDistance);
+        _knn.setDistance(_distances.getDistance(newDistance));
     }
 }
 
@@ -97,10 +87,4 @@ bool KNNInstance::isInteger(const std::string &str) {
         }
     }
     return true;
-}
-
-KNNInstance::~KNNInstance() noexcept {
-    for(auto& dist:_distances){
-        delete dist.second;
-    }
 }
