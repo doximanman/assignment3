@@ -1,10 +1,4 @@
-//
-// Created by kalo3 on 23-Aug-22.
-//
-
 #include "ConfusionMatrix.hpp"
-
-#include <utility>
 
 ConfusionMatrix::ConfusionMatrix(DefaultIO &dio, Classifier* cl) : Command(dio),_cl(cl) {
     _description="display algorithm confusion matrix";

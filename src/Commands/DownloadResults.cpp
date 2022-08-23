@@ -7,6 +7,7 @@ DownloadResults::DownloadResults(DefaultIO &dio, Classifier* cl) : Command(dio),
 }
 
 void DownloadResults::execute() {
+    // puts the classifications into a line vector.
     std::vector<std::string> lines{};
     if(_cl->wereClassified()){
         std::vector<std::string> classifications=_cl->classify();
@@ -16,6 +17,6 @@ void DownloadResults::execute() {
     }
     _dio.write("Please enter the path to save the file:");
     std::string path=_dio.read();
-    files::fileHandler::linesToFile(lines,path);
+    files::fileHandler::linesToFile(lines,path+"/results.txt");
     _dio.write("Done.");
 }

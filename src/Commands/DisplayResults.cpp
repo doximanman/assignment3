@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 23-Aug-22.
-//
-
 #include "DisplayResults.hpp"
 
 DisplayResults::DisplayResults(DefaultIO &dio, Classifier* cl) : Command(dio),_cl(cl){

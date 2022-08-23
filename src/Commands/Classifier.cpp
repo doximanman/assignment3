@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 23-Aug-22.
-//
-
 #include "Classifier.hpp"
 
 using namespace std;
@@ -21,6 +17,7 @@ std::vector<Geometry::Point> Classifier::points(){
 void Classifier::clear() {
     _points.clear();
     _classifications.clear();
+    // remembers that the data isn't classified now.
     classified=false;
 }
 void Classifier::addPoint(const Point &p) {
@@ -32,13 +29,16 @@ bool Classifier::wereClassified() const {
 }
 std::vector<std::string> Classifier::classify() {
     if(!classified){
+        // data isn't classified already. classifies it.
         _classifications.clear();
         for(Point& p : _points){
             _classifications.push_back(_knn->classify(p));
         }
         classified=true;
     }
-    return _classifications;
+    // copy vector so the classification vector won't change from outside.
+    vector<string> cpy=_classifications;
+    return cpy;
 }
 void Classifier::addPoints(const vector<Point> &points) {
     for(const Point& p : points){

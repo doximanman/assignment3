@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 23-Aug-22.
-//
-
 #ifndef SIMPLE_EXAMPLE_CLASSIFIER_HPP
 #define SIMPLE_EXAMPLE_CLASSIFIER_HPP
 
