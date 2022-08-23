@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 22-Aug-22.
-//
-
 #include <sstream>
 #include "KNNInstance.hpp"
 #include "../ManhattanDistance.hpp"

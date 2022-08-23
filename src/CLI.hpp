@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 20-Aug-22.
-//
-
 #ifndef SIMPLE_EXAMPLE_CLI_HPP
 #define SIMPLE_EXAMPLE_CLI_HPP
 

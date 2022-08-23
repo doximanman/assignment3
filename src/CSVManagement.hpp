@@ -1,7 +1,3 @@
-//
-// Created by einat on 02/08/2022.
-//
-
 #ifndef ASSIGNMENT1_CSVMANAGEMENT_HPP
 #define ASSIGNMENT1_CSVMANAGEMENT_HPP
 

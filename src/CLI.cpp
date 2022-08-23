@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 20-Aug-22.
-//
-
 #include "CLI.hpp"
 
 #include <utility>

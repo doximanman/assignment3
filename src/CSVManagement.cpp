@@ -1,6 +1,3 @@
-//
-// Created by einat on 02/08/2022.
-//
 #include "CSVManagement.hpp"
 #include <map>
 #include <iostream>

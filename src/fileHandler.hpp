@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 18-Aug-22.
-//
-
 #ifndef SIMPLE_EXAMPLE_FILEHANDLER_HPP
 #define SIMPLE_EXAMPLE_FILEHANDLER_HPP
 

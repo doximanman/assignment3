@@ -5,7 +5,6 @@
 #include "KNearestNeighbors.hpp"
 #include "fileHandler.hpp"
 #include <string>
-#include <iostream>
 #include "CSVManagement.hpp"
 
 using namespace std;

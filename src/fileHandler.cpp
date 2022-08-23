@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 18-Aug-22.
-//
-
 #include "fileHandler.hpp"
 #include <iostream>
 #include <fstream>

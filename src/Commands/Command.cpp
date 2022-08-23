@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 20-Aug-22.
-//
-
 #include "Command.hpp"
 
 std::string Command::description() {

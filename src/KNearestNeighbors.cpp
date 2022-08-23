@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 28-Jul-22.
-//
-
 #include "KNearestNeighbors.hpp"
 #include <iostream>
 #include <array>

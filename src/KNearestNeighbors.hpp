@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 28-Jul-22.
-//
-
 #ifndef ASS1_KNEARESTNEIGHBORS_HPP
 #define ASS1_KNEARESTNEIGHBORS_HPP
 

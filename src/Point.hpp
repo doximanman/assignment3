@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 27-Jul-22.
-//
-
 #ifndef ASS1_POINT_HPP
 #define ASS1_POINT_HPP
 

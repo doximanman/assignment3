@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 27-Jul-22.
-//
-
 #include "EuclideanDistance.hpp"
 #include "Distance.hpp"
 #include <cmath>

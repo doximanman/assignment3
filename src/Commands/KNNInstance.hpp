@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 22-Aug-22.
-//
-
 #ifndef SIMPLE_EXAMPLE_KNNINSTANCE_HPP
 #define SIMPLE_EXAMPLE_KNNINSTANCE_HPP
 

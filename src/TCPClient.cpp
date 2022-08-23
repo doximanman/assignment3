@@ -1,7 +1,3 @@
-//
-// Created by einat on 12/08/2022.
-//
-
 #include "TCPClient.hpp"
 #include "fileHandler.hpp"
 #include <string>

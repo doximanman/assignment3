@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 10-Aug-22.
-//
-
 #include "TCPServer.hpp"
 #include <string>
 #include <utility>
