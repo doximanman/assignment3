@@ -29,15 +29,9 @@ KNNInstance::KNNInstance(DefaultIO &dio) : Command(dio), _knn(defaultKNN()), _di
 int KNNInstance::getK() {
     return _knn.getK();
 }
-
-void KNNInstance::setK(int K) {
-    _knn.setK(K);
-}
-
-std::string KNNInstance::distance() {
+std::string KNNInstance::getDistance() {
     return _knn.getDistance().name();
 }
-
 KNearestNeighbors KNNInstance::defaultKNN() {
     // default data.
     map<string, vector<Point>> data = CSVManagement::getClassifiedData(
@@ -48,8 +42,12 @@ KNearestNeighbors KNNInstance::defaultKNN() {
     return {data, 5, EUC};
 }
 
+std::string KNNInstance::classify(const Geometry::Point& p) {
+    return _knn.classify(p);
+}
+
 void KNNInstance::execute() {
-    _dio.write("The current KNN parameters are: K = " + to_string(getK()) + ", distance metric = " + distance());
+    _dio.write("The current KNN parameters are: K = " + to_string(getK()) + ", distance metric = " + getDistance());
     string currentLine = _dio.read();
     if (_dio.read() != "\n") {
         int newK = -1;
