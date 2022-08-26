@@ -18,6 +18,7 @@ int KNNInstance::getK() {
 std::string KNNInstance::getDistance() {
     return _knn.getDistance().name();
 }
+
 KNearestNeighbors KNNInstance::defaultKNN() {
     // default data.
     map<string, vector<Point>> data = CSVManagement::getClassifiedData(
