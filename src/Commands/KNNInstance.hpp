@@ -12,7 +12,7 @@ private:
     /**
      * @return default settings with K=5 and euclidean distance.
      */
-    KNearestNeighbors defaultKNN();
+    static KNearestNeighbors defaultKNN();
     /**
      * @param str a string.
      * @return whether str is an integer or not.

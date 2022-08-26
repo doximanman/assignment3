@@ -23,7 +23,7 @@ KNearestNeighbors KNNInstance::defaultKNN() {
     map<string, vector<Point>> data = CSVManagement::getClassifiedData(
             fileHandler::getLines("../inputFiles/classified.csv"));
     // K=5, euclidean distance
-    return {data, 5,_distances.getDistance("EUC")};
+    return {data, 5,"EUC"};
 }
 
 std::string KNNInstance::classify(const Geometry::Point& p) {
@@ -31,11 +31,11 @@ std::string KNNInstance::classify(const Geometry::Point& p) {
 }
 
 void KNNInstance::execute() {
+    int newK = -1;
+    string newDistance{};
     _dio.write("The current KNN parameters are: K = " + to_string(getK()) + ", distance metric = " + getDistance());
     string currentLine = _dio.read();
     if (!currentLine.empty()) {
-        int newK = -1;
-        string newDistance{};
         do {
             stringstream str(currentLine);
             vector<string> words{};
@@ -75,7 +75,7 @@ void KNNInstance::execute() {
             }
         } while (newK == -1 || newDistance.empty());
         _knn.setK(newK);
-        _knn.setDistance(_distances.getDistance(newDistance));
+        _knn.setDistance(newDistance);
     }
 }
 

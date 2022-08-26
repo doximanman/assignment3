@@ -1,7 +1,7 @@
 #ifndef ASS1_KNEARESTNEIGHBORS_HPP
 #define ASS1_KNEARESTNEIGHBORS_HPP
 
-#include "Distance/Distance.hpp"
+#include "Distance/Distances.hpp"
 #include <memory>
 #include <array>
 #include <map>
@@ -9,7 +9,8 @@
 class KNearestNeighbors {
 private:
     int _k;
-    Geometry::Distance& _distance;
+    Geometry::Distances _distances;
+    std::string _distance;
     /**
      * maps every type in the _data table to its name.
      */
@@ -39,13 +40,13 @@ public:
       * Constructs the data table according to the given values.
       * @param data map of every type to a list of its points.
       * @param k the K to use in the algorithm.
-      * @param distance the distance function.
+      * @param distName name of the distance function.
       */
-    KNearestNeighbors(const std::map<std::string,std::vector<Geometry::Point>>& data, int k, Geometry::Distance& distance);
+    KNearestNeighbors(const std::map<std::string,std::vector<Geometry::Point>>& data, int k, std::string distName);
     int getK() const;
     Geometry::Distance& getDistance();
     void setK(int k);
-    void setDistance(Geometry::Distance& distance);
+    void setDistance(const std::string& name);
     /**
      * @return a table of all the distances from the point.
      */
