@@ -1,6 +1,5 @@
 #include "Classifier.hpp"
 
-#include <utility>
 
 using namespace std;
 using namespace Geometry;
@@ -26,6 +25,9 @@ void Classifier::addPoint(const Point &p) {
     _points.push_back(p);
 }
 
+void Classifier::updateData(const std::map<std::string, std::vector<Geometry::Point>> &newData) {
+    _knn.updateData(newData);
+}
 bool Classifier::wereClassified() const {
     return classified;
 }

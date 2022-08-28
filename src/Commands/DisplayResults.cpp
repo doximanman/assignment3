@@ -14,7 +14,7 @@ void DisplayResults::execute() {
         }
     }
     else{
-        _dio.write("The data isn't classified! Please use the 'classify data' command first.");
+        _dio.write("Nothing to classify! Please use the 'classify data' command first.");
     }
     _dio.write("Done.");
 }

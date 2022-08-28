@@ -13,7 +13,7 @@ CLI::CLI(DefaultIO& dio) : _dio(dio),_commands(){
     auto *matrix=new ConfusionMatrix{dio,*classifier};
     auto *display=new DisplayResults{dio,*classifier};
     auto *download=new DownloadResults{dio,*classifier};
-    auto *uploader=new UploadCSV{dio,*matrix};
+    auto *uploader=new UploadCSV{dio,*classifier};
     _commands.push_back(unique_ptr<UploadCSV>(uploader));
     _commands.push_back(unique_ptr<KNNInstance>(knn));
     _commands.push_back(unique_ptr<Classifier>(classifier));

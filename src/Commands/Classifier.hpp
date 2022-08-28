@@ -25,6 +25,7 @@ public:
      * @param p set of points to add.
      */
     void addPoints(const std::vector<Geometry::Point>& points);
+    void updateData(const std::map<std::string,std::vector<Geometry::Point>>& newData);
     std::vector<Geometry::Point> points();
     /**
      * clears all data. points and classifications.

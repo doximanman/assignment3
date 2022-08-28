@@ -5,13 +5,13 @@
 
 class UploadCSV : public Command {
 private:
-    ConfusionMatrix& _cm;
+    Classifier& _cl;
 public:
     /**
      * @param dio IO for reading and writing.
-     * @param cm the confusion matrix that stores the points and known classifications.
+     * @param cl the classifier instance.
      */
-    UploadCSV(DefaultIO& dio, ConfusionMatrix& cm);
+    UploadCSV(DefaultIO& dio, Classifier& cl);
     /**
      * Lets the user upload new train and test files.
      */

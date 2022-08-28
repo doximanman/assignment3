@@ -36,6 +36,7 @@ public:
      * @param p the point to classify.
      * @return the classification.
      */
+    void updateData(const std::map<std::string,std::vector<Geometry::Point>>& newData);
     std::string classify(const Geometry::Point& p);
     /**
      * Asks the user to provide new KNN parameters.
