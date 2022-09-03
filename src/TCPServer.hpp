@@ -25,10 +25,6 @@ private:
      * @param client_sock socket of client to read from and write to.
      */
     static void newClient(int client_sock);
-    /**
-     * @return system time. HH:MM:SS
-     */
-    static std::string getTime();
 public:
     /**
      * creates a new TCP server.

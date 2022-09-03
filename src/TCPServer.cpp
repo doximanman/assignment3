@@ -7,7 +7,7 @@
 #include "CLI.hpp"
 #include "TCPServer.hpp"
 
-#define TIMEOUT_SECONDS 5
+#define TIMEOUT_SECONDS 300
 
 using namespace std;
 
@@ -25,10 +25,10 @@ TCPServer::TCPServer(int port) : _timeout(false), _stop(false), _port(port), _th
 
 void TCPServer::newClient(int client_sock) {
     SocketIO sio{client_sock};
-    cout << getTime() + ": New client joined on socket: " + to_string(client_sock) << endl;
+    cout << "New client joined on socket: " + to_string(client_sock) << endl;
     CLI cli{sio};
     cli.start();
-    cout << getTime() + ": Client disconnected on socket: " + to_string(client_sock) << endl;
+    cout << "Client disconnected on socket: " + to_string(client_sock) << endl;
 }
 
 void TCPServer::timeoutEnforcer() {
@@ -47,7 +47,7 @@ void TCPServer::timeoutEnforcer() {
         } else {
             // timeout reached. notifies server to stop accepting new clients and wait for clients to finish.
             _timeout = true;
-            cout << getTime() + ": Server timed out. Waiting for all clients to finish." << endl;
+            cout <<"Server timed out. Waiting for all clients to finish." << endl;
             // waits for clients to finish.
             for (thread &thr: _threads) {
                 thr.join();
@@ -72,7 +72,7 @@ void TCPServer::start() {
     if (listen(_sock, 5) < 0) {
         perror("Error listening to a socket");
     }
-    cout << getTime() + ": Server is open. Accepting clients." << endl;
+    cout <<"Server is open. Accepting clients." << endl;
     while (!_stop) {
         struct sockaddr_in _client_sin{};
         unsigned int addr_len = sizeof(_client_sin);
@@ -82,7 +82,7 @@ void TCPServer::start() {
             if (_stop) {
                 // all clients finished. closes the server.
                 close(_sock);
-                cout << getTime() + ": Server closed." << endl;
+                cout <<"Server closed." << endl;
             } else {
                 // clients haven't yet finished. notifies the new client that the server isn't accepting new clients.
                 SocketIO sio{client_sock};
@@ -99,10 +99,4 @@ void TCPServer::start() {
             }
         }
     }
-}
-
-std::string TCPServer::getTime() {
-    time_t timenow = time(nullptr);
-    string date = ctime(&timenow);
-    return "[" + date.substr(11, 8) + "]";
 }
