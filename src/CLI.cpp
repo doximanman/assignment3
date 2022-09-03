@@ -1,6 +1,4 @@
 #include "CLI.hpp"
-
-#include <utility>
 #include "fileHandler.hpp"
 #include "Commands/UploadCSV.hpp"
 #include "Commands/DisplayResults.hpp"
@@ -28,23 +26,41 @@ CLI::CLI(DefaultIO& dio,const std::vector<Command*>& commands):_dio(dio),_comman
 }
 
 void CLI::start() {
+    // changes to true when the client chooses the exit option.
     bool stop=false;
+    // prints the welcome message on the first try.
+    bool firstTime=true;
     while(!stop) {
-        _dio.write("Welcome to the KNN Classifier Server. Please choose an option:");
+        if(firstTime){
+            // welcome message.
+            _dio.write("printWelcome to the KNN Classifier Server. Please choose an option:\n");
+            firstTime=false;
+        }
+        else {
+            // normal message.
+            _dio.write("printPlease choose an option:\n");
+        }
+        // prints description of every command.
         for (int i = 0; i < _commands.size(); i++) {
-            _dio.write(to_string(i + 1) + ". " + _commands[i]->description());
+            _dio.write("print"+to_string(i + 1) + ". " + _commands[i]->description()+"\n");
         }
-        _dio.write(to_string(_commands.size()+1) + ". exit");
+        // exit option.
+        _dio.write("write"+to_string(_commands.size()+1) + ". exit\n");
+        // client's choice.
         string input = _dio.read();
+        // must be an integer between 1 and the number of commands.
         if (!isInteger(input) || stoi(input) < 1 || stoi(input) > _commands.size()+1) {
+            // asks for input until a valid choice is entered.
             do {
-                _dio.write("Invalid choice! Please try again.");
+                _dio.write("writeInvalid choice! Please try again.\n");
                 input = _dio.read();
-            } while (!isInteger(input));
+            } while (!isInteger(input)|| stoi(input) < 1 || stoi(input) > _commands.size()+1);
         }
+        // executes chosen command.
         int choice = stoi(input);
         if(choice==_commands.size()+1){
             stop=true;
+            _dio.write("end");
         }
         else{
             _commands[choice-1]->execute();
@@ -53,6 +69,9 @@ void CLI::start() {
 }
 
 bool CLI::isInteger(const std::string& str) {
+    if(str.empty()){
+        return false;
+    }
     for(const char&c : str){
         if(!isdigit(c)){
             return false;

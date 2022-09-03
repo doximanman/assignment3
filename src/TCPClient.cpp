@@ -8,57 +8,103 @@ using namespace std;
 using namespace Networking;
 using namespace files;
 
-TCPClient::TCPClient(std::string unclassifiedDataPath, std::string classifiedDataPath, int port, const char *ip_adress)
-        :
-        port(port), _ip_address(ip_adress),
-        _unclassifiedDataPath(std::move(unclassifiedDataPath)),
-        _classifiedDataPath(std::move(classifiedDataPath)) {
+TCPClient::TCPClient(int port, string ip_address) : port(port), _ip_address(std::move(ip_address)) {
     _sock = socket(AF_INET, SOCK_STREAM, 0);
     if (_sock < 0) {
         perror("error creating socket");
     }
 
-    struct sockaddr_in sin{AF_INET,htons(this->port),inet_addr(_ip_address)};
+    struct sockaddr_in sin{AF_INET, htons(this->port), inet_addr(_ip_address.c_str())};
 
     if (connect(_sock, (struct sockaddr *) &sin, sizeof(sin)) < 0) {
         perror("error connecting to server");
     }
 }
 
-void TCPClient::connectToServer() {
-    char data[4096]={0};
-    int data_len=sizeof(data);
-    std::strcpy(data, fileHandler::getString(_unclassifiedDataPath).c_str());
-    int sent_bytes = (int)send(_sock, data, data_len, 0);
+std::string TCPClient::readMessage() const {
+    // reads from the server.
+    char buffer[4096] = {0};
+    int expected_data_len = sizeof(buffer);
+    int read_bytes = (int) recv(_sock, buffer, expected_data_len, 0);
+    if (read_bytes == 0) {
+        return "";
+    } else if (read_bytes < 0) {
+        perror("Error reading client message");
+    }
+    return {buffer};
+}
+
+void TCPClient::sendMessage(const std::string &message) const {
+    int sent_bytes = (int) send(_sock, message.c_str(), message.length(), 0);
 
     if (sent_bytes < 0) {
         cout << "Error sending the data to the server" << endl;
     }
+}
 
-    char buffer[4096]={0};
-    int expected_data_len = sizeof(buffer);
-    int read_bytes = (int)recv(_sock, buffer, expected_data_len, 0);
-    if (read_bytes == 0) {
-        cout << "Connection terminated" << endl;
-        close(_sock);
-        return;
-    } else if (read_bytes < 0) {
-        perror("Error reading client message");
-    } else {
-        // convert buffer to type string
-        string classificationStrings(buffer);
-        stringstream str(classificationStrings);
-        string currentClassification;
-        // classified string vector
-        vector<string> classifications;
-        // saves each current classification into the vector
-        while(getline(str,currentClassification)){
-            classifications.push_back(currentClassification);
+void TCPClient::toFile(string data,string path) {
+    // writes data to path.
+    vector<string> lines = files::fileHandler::stringToLines(data, '@');
+    files::fileHandler::linesToFile(lines, path);
+    pthread_exit(nullptr);
+}
+
+void TCPClient::connectToServer() const {
+    // receive message.
+    while (true) {
+        string wholeMessage = readMessage();
+        // messages are separated by \n.
+        vector<string> messages = files::fileHandler::stringToLines(wholeMessage);
+        for (int i = 0; i < messages.size(); i++) {
+            int len = (int) messages[i].length();
+            if (len > 5 && messages[i].substr(0, 5) == "print") {
+                // simply print the message.
+                cout << messages[i].substr(5, messages[i].length()) << endl;
+            } else if (len > 5 && messages[i].substr(0, 5) == "write") {
+                // print the message and send console input.
+                cout << messages[i].substr(5, messages[i].length()) << endl;
+                string toSend{};
+                getline(cin, toSend);
+                if (toSend.empty()) {
+                    toSend = "empty";
+                }
+                sendMessage(toSend);
+            } else if (len > 6 && messages[i].substr(0, 6) == "toFile") {
+                // prints the message, and writes the data received with it to a file given by console input,
+                // on a different thread.
+                cout << messages[i].substr(6, messages[i].length()) << endl;
+                string path;
+                getline(cin, path);
+                bool err = files::fileHandler::validPath(path);
+                while (!err) {
+                    cout << "invalid path" << endl;
+                    getline(cin, path);
+                    err = files::fileHandler::validPath(path);
+                }
+                // i+1 exists because toFile messages are sent in chunks of 2 lines at once.
+                thread writingThread{&TCPClient::toFile,messages[i+1],path};
+                writingThread.detach();
+            } else if (len > 7 && messages[i].substr(0, 7) == "getFile") {
+                // prints the message, gets a file from the console (gets the path and then reads it) and sends
+                // it to the server.
+                cout << messages[i].substr(7, messages[i].length()) << endl;
+                string path;
+                getline(cin, path);
+                int err;
+                string data = files::fileHandler::getString(path, &err);
+                while (err < 0) {
+                    cout << "invalid path" << endl;
+                    getline(cin, path);
+                    data = files::fileHandler::getString(path, &err);
+                }
+                sendMessage(data);
+            } else if (len > 2 && messages[i] == "end") {
+                // connection has ended.
+                close(_sock);
+                return;
+            }
         }
-        // save the classified data in the given classifiedData output path
-        fileHandler::linesToFile(classifications, _classifiedDataPath);
     }
-    close(_sock);
 }
 
 

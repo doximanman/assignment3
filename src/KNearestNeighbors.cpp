@@ -9,36 +9,53 @@ using namespace Geometry;
 
 KNearestNeighbors::KNearestNeighbors(const std::map<std::string, std::vector<Geometry::Point>> &data,
                                      int k,
-                                     std::string  _distanceName) :
-        _data(), _distance(std::move(_distanceName)), numOfPoints(0),_distances() {
+                                     std::string _distanceName) :
+        _data(), _distance(std::move(_distanceName)), numOfPoints(0), _distances(),_k(k) {
     int typeCount = 0;
     for (auto &keyValPair: data) {
         _types[typeCount++] = keyValPair.first;
         _data.emplace_back(keyValPair.second);
         numOfPoints += (int) keyValPair.second.size();
     }
-    if (k >= numOfPoints) {
-        k = numOfPoints - 1;
+}
+
+KNearestNeighbors &KNearestNeighbors::operator=(const KNearestNeighbors &other) {
+    if(this==&other){
+        return *this;
     }
-    _k = k;
+    _data=other._data;
+    _k=other._k;
+    _types=other._types;
+    _distance=other._distance;
+    numOfPoints=other.numOfPoints;
+    return *this;
 }
 
 int KNearestNeighbors::getK() const {
     return _k;
 }
 
-Geometry::Distance& KNearestNeighbors::getDistance() {
+Geometry::Distance &KNearestNeighbors::getDistance() {
     return _distances.getDistance(_distance);
 }
+
 void KNearestNeighbors::setK(int k) {
     _k = k;
 }
 
-void KNearestNeighbors::setDistance(const std::string& name) {
-    _distance=name;
+void KNearestNeighbors::setDistance(const std::string &name) {
+    _distance = name;
 }
 
-vector<vector<double>> KNearestNeighbors::distances(const Geometry::Point& modelPoint) {
+std::map<std::string, std::vector<Geometry::Point>> KNearestNeighbors::getData() {
+    map<string, vector<Point>> data;
+    for (int i = 0; i < _data.size(); i++) {
+        data[_types[i]] = _data[i];
+    }
+    return data;
+}
+
+vector<vector<double>> KNearestNeighbors::distances(const Geometry::Point &modelPoint) {
     // instantiates the distance table.
     vector<vector<double>> dists(_data.size());
     for (int i = 0; i < _data.size(); i++) {
@@ -61,11 +78,14 @@ bool KNearestNeighbors::contains(vector<array<int, 2>> list, int val1, int val2)
     return false;
 }
 
-vector<array<int, 2>> KNearestNeighbors::firstK(const Geometry::Point& modelPoint) {
-    vector<array<int, 2>> result(_k);
-    for (auto item: result) {
-        item[0] = -1;
-        item[1] = -1;
+vector<array<int, 2>> KNearestNeighbors::firstK(const Geometry::Point &modelPoint) {
+    // normalizes K if it's too big.
+    if(_k>=numOfPoints){
+        _k=numOfPoints-1;
+    }
+    vector<array<int, 2>> result{};
+    for (int i = 0; i < _k; i++) {
+        result.emplace_back(array<int, 2>{-1, -1});
     }
     vector<vector<double>> dists = distances(modelPoint);
     // finds the minimum K times - ignores the last findings (to make sure we get K different elements,
@@ -93,7 +113,7 @@ vector<array<int, 2>> KNearestNeighbors::firstK(const Geometry::Point& modelPoin
     return result;
 }
 
-vector<Point> KNearestNeighbors::nearestNeighbors(const Geometry::Point& modelPoint) {
+vector<Point> KNearestNeighbors::nearestNeighbors(const Geometry::Point &modelPoint) {
     // simply gets the indices of the nearest neighbors and returns a list of the actual points.
     vector<Point> neighbors = {};
     for (auto &index: firstK(modelPoint)) {
@@ -102,7 +122,7 @@ vector<Point> KNearestNeighbors::nearestNeighbors(const Geometry::Point& modelPo
     return neighbors;
 }
 
-string KNearestNeighbors::classify(const Geometry::Point& modelPoint) {
+string KNearestNeighbors::classify(const Geometry::Point &modelPoint) {
     // uses a counter list to count how many points of the closest K points are of each
     // data type, then finds the max of that counter list, and returns the index of it.
     // counter list.
@@ -136,7 +156,7 @@ vector<string> KNearestNeighbors::classifyData(const vector<Point> &unclassified
     return classifyStrings;
 }
 
-void KNearestNeighbors::printNearestNeighbors(const Geometry::Point& modelPoint) {
+void KNearestNeighbors::printNearestNeighbors(const Geometry::Point &modelPoint) {
     vector<Point> neighbors = nearestNeighbors(modelPoint);
     // uses the print implementation of Point to print all the points.
     for (const auto &item: neighbors) {

@@ -7,30 +7,23 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <pthread.h>
+#include <thread>
 #include <cstring>
 
 namespace Networking {
     class TCPClient {
     private:
         /**
-         * Path to the unclassified data.
-         */
-        const std::string _unclassifiedDataPath;
-
-        /**
-         * Path to the classified data.
-         */
-        const std::string _classifiedDataPath;
-
-        /**
          * Socket number.
          */
         int _sock;
 
         /**
-         * IP adress number.
+         * IP address number.
          */
-        const char *_ip_address;
+        std::string _ip_address;
+        static void toFile(std::string data,std::string path);
     public:
         /**
          * Port number.
@@ -39,16 +32,23 @@ namespace Networking {
 
         /**
          * Constructor of a new Client.
-         * @param unclassifiedDataPath string.
-         * @param classifiedDataPath string.
-         * @param port number.
          */
-        TCPClient(std::string unclassifiedDataPath, std::string classifiedDataPath, int port, const char *ip_adress);
+        TCPClient(int port, std::string  ip_address);
 
         /**
          * Connects the server and send it the unclassifiedDataPath;
          */
-        void connectToServer();
+        void connectToServer() const;
+        /**
+         * sends the message to the server.
+         * @param message message to send.
+         */
+        void sendMessage(const std::string& message) const;
+        /**
+         * reads a message from the server.
+         * @return the message that was read.
+         */
+        std::string readMessage() const;
     };
 }
 #endif //SIMPLE_EXAMPLE_TCPCLIENT_HPP

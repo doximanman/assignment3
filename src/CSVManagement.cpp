@@ -29,12 +29,10 @@ map<string, vector<Point>> CSVManagement::getClassifiedData(const vector<string>
     map<string, vector<Point>> result{};
     // gets the points with their types in csv string form.
     vector<vector<string>> data = createDataVector(lines);
-    int a=0;
     for (vector<string> &point: data) {
-        if(a>=9){
-            a=0;
+        if(point.empty()){
+            continue;
         }
-        a++;
         // all points have to be of the same dimension.
         if (len == -1) {
             len = (int) point.size();
@@ -59,10 +57,14 @@ map<string, vector<Point>> CSVManagement::getClassifiedData(const vector<string>
 }
 
 vector<Point> CSVManagement::getUnclassifiedData(const vector<string> &lines) {
+    // same as "getClassifiedData" but without the type of every point.
     vector<Point> result{};
     vector<vector<string>> data = createDataVector(lines);
     int len = -1;
     for (vector<string> &point: data) {
+        if(point.empty()){
+            continue;
+        }
         if (len == -1) {
             len = (int) point.size();
         } else if (len != (int) point.size()) {
@@ -75,12 +77,4 @@ vector<Point> CSVManagement::getUnclassifiedData(const vector<string> &lines) {
         result.emplace_back(Point{coords});
     }
     return result;
-}
-
-void CSVManagement::printClassifications(const std::vector<Geometry::Point> &points,
-                                         const std::vector<std::string> &classifications) {
-    for(int i=0;i<points.size();i++){
-        cout << points[i];
-        cout << classifications[i] << endl;
-    }
 }

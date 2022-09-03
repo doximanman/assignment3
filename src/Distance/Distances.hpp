@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 24-Aug-22.
-//
-
 #ifndef SIMPLE_EXAMPLE_DISTANCES_HPP
 #define SIMPLE_EXAMPLE_DISTANCES_HPP
 
@@ -10,6 +6,9 @@
 #include "ManhattanDistance.hpp"
 
 namespace Geometry {
+    /**
+     * distance factory.
+     */
     class Distances {
     private:
         EuclideanDistance EUC;

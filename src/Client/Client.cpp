@@ -4,12 +4,11 @@ using namespace std;
 using namespace Networking;
 
  /**
-  * Creates a TCP client, connect to the server and create csv output file in the given classified path directory.
-  * @param argv args[1] is the unclassified path, args[2] is the output path.
+  * Creates a TCP client, and connects to the server.
   * @return
   */
-int main(int argc,char* argv[]) {
-    const int port = 12345;
-    TCPClient client(argv[1], argv[2], port, "127.0.0.1");
+int main() {
+    const int port = 12346;
+    TCPClient client(port, "127.0.0.1");
     client.connectToServer();
 }

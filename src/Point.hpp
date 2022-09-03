@@ -35,11 +35,14 @@ namespace Geometry {
          * @return the position-th coordinate of the point.
          */
         double at(int position) const;
+        /**
+         * copy operator.
+         */
         Point& operator=(const Point& other);
     };
 }
 /**
- * @return prints the point in the form (x1,x2,...,xn)
+ * @return prints the point in the form x1 x2 ... xn
  */
 std::ostream& operator<<(std::ostream &os, const Geometry::Point &a);
 #endif //ASS1_POINT_HPP

@@ -2,21 +2,21 @@
 #include "../fileHandler.hpp"
 #include <utility>
 
-DownloadResults::DownloadResults(DefaultIO &dio, Classifier& cl) : Command(dio),_cl(cl){
-    _description="download results";
+DownloadResults::DownloadResults(DefaultIO &dio, Classifier &cl) : Command(dio), _cl(cl) {
+    _description = "download results";
 }
 
 void DownloadResults::execute() {
-    // puts the classifications into a line vector.
-    std::vector<std::string> lines{};
-    if(_cl.wereClassified()){
-        std::vector<std::string> classifications=_cl.classify();
-        for(auto & classification : classifications){
-            lines.push_back(classification);
-        }
+    if (!_cl.wereClassified()) {
+        _dio.write("printPlease classify data with 'classify data' command first!\n");
+        return;
     }
-    _dio.write("Please enter the path to save the file:");
-    std::string path=_dio.read();
-    files::fileHandler::linesToFile(lines,path+"/results.txt");
-    _dio.write("Done.");
+    // puts the classifications into one string. Lines seperated by '@'.
+    std::string message;
+    std::vector<std::string> classifications = _cl.classify();
+    for (auto &classification: classifications) {
+        message.append(classification + "@");
+    }
+    _dio.write("toFilePlease enter the path to save the file:\n" + message+"\n");
+    _dio.write("Done.\n");
 }

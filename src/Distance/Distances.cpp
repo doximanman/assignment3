@@ -1,7 +1,3 @@
-//
-// Created by kalo3 on 24-Aug-22.
-//
-
 #include "Distances.hpp"
 
 using namespace Geometry;
