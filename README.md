@@ -52,3 +52,19 @@ then, in other terminals (as many as you'd like), run the clients using:
 ```
 ./Client.out
 ```
+After that, on the client side you can run any set of commands you want. A set of commands that tests everything that will always work is:
+```
+1
+../inputFiles/train.csv
+../inputFiles/test.csv
+2
+3 MAN
+3
+4
+5
+../outputFiles/classified.csv
+6
+7
+
+```
+lines 1-3 will upload the train and test csv files. lines 4-5 will change the algorithm parameter, line 6 will classify the data, line 7 will show the data to the console, lines 8-9 will download the data to outputFiles/classified.csv, line 10 will print the confusion matrix, and line 7 will exit.
