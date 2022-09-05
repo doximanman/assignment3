@@ -11,7 +11,7 @@ The server allowes the clients to run commands that analyses their data in diffe
 
 # The Commands
 
-The KNN classifier server has command line interface that allows the client to perform certain commands:
+The KNN classifier server has a command line interface that allows the client to perform certain commands:
 - **upload an unclassified csv data file:** asks the client to provide a train csv file, that contains a list of points and their classifications. points from this file will be used in the KNN algorithm to classify points. Then, it asks the client to upload a test csv file, that contains a list of points without classifications. these points will be then classified (in a different command) by the KNN algorithm, using the data given by the train csv file.
 - **algorithm settings:** shows the client the parameters of the KNN algorithm, and gives them an option to change them. After shown the settings, the client can either not provide new parameters by pressing the enter key, or provide new parameters by typing them in the form: "X Y", where X is a number between 1 and 10 and Y is the name of a known distance function. Currently the known distances are: EUC - Euclidean distance, MAN - Manhattan distance, CHE - Chebyshev distnace. If the client tries to provide parameters but does so in the wrong format, the command will keep asking for parameters until valid ones are given (in this mode the 'enter' key doesn't exit the function. new parameters must be given after the first try failed).
 - **classify data:** simply classifies the data using the KNN algorithm, and the data provided at the upload command. If the upload command wasn't used yet, it will tell the client to use the upload command first, and not change or classify anything.
