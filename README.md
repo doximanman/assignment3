@@ -39,7 +39,7 @@ Client:
 
 # How we divided the work
 
-We divided it into 2 parts: The 1-6 commands portion, and the SocketIO + threads portion. Yoav did the 1-6 commands portion, and SocketIO and threads portion.
+We divided it into 2 parts: The 1-6 commands portion, and the SocketIO + threads portion. Yoav did the 1-6 commands portion, and Einat did the SocketIO and threads portion.
 We feel this is fair because writing the commands takes a long time, but so does learning how to use threads (the timeout portion took about a day!) and integrating sockets into the project. So we though the commands part is about equal, effort/time wise, to learning threads and doing the SocketIO integration.
 
 # How to run
